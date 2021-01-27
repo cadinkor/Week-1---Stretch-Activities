@@ -1,0 +1,4 @@
+function flatten() {
+  let newArr = [];
+  
+}
