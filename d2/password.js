@@ -1,4 +1,5 @@
 let pwd = process.argv[2];
+console.log(process.argv[2])
 
 function obfuscate(str) {
   let result = "";
