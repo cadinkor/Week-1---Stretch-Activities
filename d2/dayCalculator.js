@@ -1,46 +1,10 @@
 function calculateDayInYear(date) {
-  const splitDate = date.split('/');
-  const year = Number(splitDate[0]);
-  const month = Number(splitDate[1]);
-  const day = Number(splitDate[2]);
-
-  const validMonth = function(month) {
-    
-    return month && month >= 1 && month < 12;
-  }
-
-  const validDay = function(month, day) {
-    return day && day >= 1 && day < DAYS_IN_MONTH[month - 1];
-  }
-
-  const calculateDayNumber = function (month, day) {
-    if (day) {
-        let dayOfYear = 0;
-        for (let i = 1; i <= month - 1; i++) {
-            dayOfYear += DAYS_IN_MONTH[i - 1];
-        } return dayOfYear + day;
-
-    } else {
-        let dayOfYear = 0;
-        for (let i = 1; i <= month; i++) {
-          dayOfYear += DAYS_IN_MONTH[i - 1];
-        } return dayOfYear;
-    }
-}
-
-  const daysInFeb = function(year) {
-    if (isLeapYear(year)) {
-      return 29;
-    }else{
-      return 28
-    }
-  }
-
-  const isLeapYear = function(year) {
-    return isMultiple(year, 400) || !isMultiple(year, 100) && isMultiple(year, 4);
-  }
-
-  const DAYS_IN_MONTH = [31, daysInFeb(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  let splitDate = date.split('/');
+  let year = Number(splitDate[0]);
+  let month = Number(splitDate[1]);
+  let day = Number(splitDate[2]);
+  let febDays = daysInFeb(year);
+  let DAYS_IN_MONTH = [31, febDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   if (year && validMonth(month) && validDay(month, day)) {
     console.log(date, "is day", calculateDayNumber(month, day), "of the year", year);
@@ -48,29 +12,50 @@ function calculateDayInYear(date) {
   } else {
     console.log("Invalid date");
   }
-}
 
-const calculateDayNumber = function (month, day) {
-  let dayOfYear = 1;
-  const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  for (let i = 1; i <= month; i++) {
-      dayOfYear += DAYS_IN_MONTH[i - 1];
+  function validMonth(month) {
+    return month && month >= 1 && month <= 12;
   }
 
-  return (dayOfYear + day);
-}
+  function validDay(month, day) {
+    return day && day >= 1 && day <= DAYS_IN_MONTH[month - 1];
+  }
 
-const isMultiple = function(numerator, denominator) {
-  return numerator % denominator === 0;
-}
+  function calculateDayNumber(month, day) {
+    let dayOfYear = 0;
+    for (let i = 1; i < month; i++) {
+      dayOfYear += DAYS_IN_MONTH[i - 1];
+    }
+    dayOfYear += day;
+    return dayOfYear;
+  }
 
-/*
-    Below are some simple tests!
-    They run the function with a predetermined parameter and compare the output to the value we are expecting to get!
-    The console.log will output either 'true' or 'false' based on whether or not the function
-    returns a value that matched our expected value.
-    You'll know your code works correctly when all of these tests return 'true'.
-*/
+  function daysInFeb(year) {
+    if (isLeapYear(year) === true){
+      return 29;
+    } else {
+      return 28;
+    }
+  }
+
+  function isLeapYear(year) {
+    if (isMultiple(year, 400) || !isMultiple(year, 100) && isMultiple(year, 4)){
+      return true;
+    }
+  }
+
+  function isMultiple(numerator, denominator) {
+    return numerator % denominator === 0;
+  }
+}
+// let date = process.argv[2];
+
+// if (!date) {
+//   console.log("Please provide a date in the format YYYY/MM/DD");
+// } else {
+//   calculateDayInYear(date);
+// }
+
 console.log("Tests:");
 console.log("---------------");
 console.log(calculateDayInYear("1900/3/2") === 61);
