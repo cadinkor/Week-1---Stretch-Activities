@@ -48,13 +48,6 @@ function calculateDayInYear(date) {
     return numerator % denominator === 0;
   }
 }
-// let date = process.argv[2];
-
-// if (!date) {
-//   console.log("Please provide a date in the format YYYY/MM/DD");
-// } else {
-//   calculateDayInYear(date);
-// }
 
 console.log("Tests:");
 console.log("---------------");

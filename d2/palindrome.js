@@ -1,20 +1,14 @@
 // FUNCTION IMPLEMENTATION (MULTIPLE BUGS)
 function palindrome(str) {
-  let change = /[^A-Za-z0-9]/g;
-  console.log(change)
-  str = str.toLowerCase().replace(change, '');
-  let len = str.length;
-
-  for (let i = 0; i < len/2; i++) {
-    if (str.length <= 1){
-      return false;
-    }
-    if (str[i] !== str[len - 1 - i]) {
-        return false;
-    }
-  }
-  return true;
- }
+  // Step 1. Lowercase the string and use the RegExp to remove unwanted characters from it
+  // Step 2. Create a variable that hosts the original string
+  // Step 3. Create a variable that hosts a reverse of the original
+  // Step 4. Compare the two
+  let changes = /[\W_]/g; 
+  var lowRegStr = str.toLowerCase().replace(changes, '');
+  var reverseStr = lowRegStr.split('').reverse().join(''); 
+  return reverseStr === lowRegStr;
+}
 
 //  https://www.freecodecamp.org/news/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7/
 
@@ -32,7 +26,7 @@ const assertPalindrome = function(word, expected) {
 
 // TEST CODE
 // These should all pass assertion, but they don't.
-assertPalindrome('p', false);
+assertPalindrome('p', true);
 assertPalindrome('racecar', true);
 assertPalindrome('my gym', true);
 assertPalindrome('foo', false);
